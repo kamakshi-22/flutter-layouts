@@ -61,11 +61,28 @@ class _Screen04State extends State<Screen04> {
   }
 }
 
+List<Map<String, dynamic>> hotelList = [
+    {
+      'image': '',
+      'place': 'Open Space',
+      'destindation': 'London',
+      'price': 25
+    },
+    {
+      'image': '',
+      'place': 'New Orchards',
+      'destindation': 'New York',
+      'price': 30
+    },
+  ];
+
 class HomeScreen extends StatelessWidget {
+  
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: const Color(0xFFeeedf2),
       body: ListView(
@@ -159,13 +176,10 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
                 const Gap(15),
-                const SingleChildScrollView(
+                SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
-                      children: [
-                        HotelScreen(),
-                        HotelScreen(),
-                      ],
+                      children: hotelList.map((hotel) => HotelScreen(hotel: hotel)).toList(),
                     )),
               ],
             ),
@@ -177,7 +191,8 @@ class HomeScreen extends StatelessWidget {
 }
 
 class HotelScreen extends StatelessWidget {
-  const HotelScreen({super.key});
+  final Map<String, dynamic> hotel;
+  const HotelScreen({super.key, required this.hotel});
 
   @override
   Widget build(BuildContext context) {
@@ -210,17 +225,17 @@ class HotelScreen extends StatelessWidget {
           ),
           const Gap(10),
           Text(
-            "Open Space",
+            "${hotel['place']}",
             style: Styles.headLineStyle2.copyWith(color: Colors.white70),
           ),
           const Gap(5),
           Text(
-            "London",
+            "${hotel['destination']}",
             style: Styles.headLineStyle3.copyWith(color: Colors.white),
           ),
           const Gap(8),
           Text(
-            "\$40/night",
+            "\$${hotel['price']}/night",
             style: Styles.headLineStyle1.copyWith(color: Colors.white70),
           ),
         ],
@@ -406,6 +421,19 @@ class TicketView extends StatelessWidget {
 class AppLayout {
   static getSize(BuildContext context) {
     return MediaQuery.of(context).size;
+  }
+
+  static getScreenHeight(BuildContext context){
+    return getSize(context).size.height;
+  }
+
+  static getScreenWidth(BuildContext context){
+    return getSize(context).size.width;
+  }
+
+  static getHeight(double pixels, BuildContext context){
+    double x = getScreenHeight(context)/pixels;
+    return getScreenHeight(context)/x;
   }
 }
 
