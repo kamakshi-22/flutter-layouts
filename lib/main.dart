@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:layouts/provider/screen_06_provider.dart';
+import 'package:layouts/provider/screen_07_provider.dart';
+import 'package:layouts/provider/screen_08_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/screens.dart';
 
@@ -11,14 +15,16 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Layouts',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Screen05(),
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => Screen06Provider()),
+          ChangeNotifierProvider(create: (_) => Screen07Provider()),
+          ChangeNotifierProvider(create: (_) => Screen08Provider()),
+        ],
+        child: MaterialApp(
+          title: 'Flutter Layouts',
+          debugShowCheckedModeBanner: false,
+          home: Screen08(),
+        ));
   }
 }
